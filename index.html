@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Turkey Winter Escape • Dec 25 – Jan 3</title>
+  <meta name="description" content="Interactive sample itinerary for a quick winter trip to Istanbul, Turkey. New Year's Eve fireworks, historic sites, food & practical tips." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            istanbul: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              200: '#b9dffd',
+              300: '#7cc5fb',
+              400: '#36a7f6',
+              500: '#0c8ce7',
+              600: '#006fc5',
+              700: '#0158a0',
+              800: '#064b84',
+              900: '#0b3f6e',
+              950: '#072849',
+            },
+            gold: {
+              400: '#f5d76e',
+              500: '#e8b923',
+              600: '#c99a0f',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Playfair Display', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .font-display { font-family: 'Playfair Display', Georgia, serif; }
+    .day-card { transition: all 0.25s ease; }
+    .day-card:hover { transform: translateY(-2px); }
+    .day-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .day-content.open { max-height: 800px; }
+    #map { height: 420px; border-radius: 1rem; z-index: 1; }
+    .leaflet-popup-content-wrapper { border-radius: 12px; }
+    .checklist-item input:checked + span { text-decoration: line-through; opacity: 0.6; }
+    @media print {
+      .no-print { display: none !important; }
+      .day-content { max-height: none !important; }
+      body { background: white; }
+    }
+    .hero-pattern {
+      background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(245,215,110,0.1) 0%, transparent 40%);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-istanbul-950/95 backdrop-blur-md text-white shadow-lg no-print">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="font-display text-xl font-bold tracking-tight">
+        <span class="text-gold-400">✦</span> Turkey Winter Escape
+      </div>
+      <div class="flex flex-wrap gap-1 text-sm">
+        <a href="#overview" class="px-3 py-1.5 rounded-full hover:bg-white/10 transition">Overview</a>
+        <a href="#itinerary" class="px-3 py-1.5 rounded-full hover:bg-white/10 transition">Itinerary</a>
+        <a href="#map" class="px-3 py-1.5 rounded-full hover:bg-white/10 transition">Map</a>
+        <a href="#tips" class="px-3 py-1.5 rounded-full hover:bg-white/10 transition">Tips</a>
+        <a href="#packing" class="px-3 py-1.5 rounded-full hover:bg-white/10 transition">Packing</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="bg-gradient-to-br from-istanbul-900 via-istanbul-800 to-istanbul-950 text-white hero-pattern">
+    <div class="max-w-5xl mx-auto px-4 py-16 md:py-24 text-center">
+      <p class="text-gold-400 font-medium tracking-widest uppercase text-sm mb-3">Sample Itinerary</p>
+      <h1 class="font-display text-4xl md:text-6xl font-bold leading-tight mb-4">
+        Istanbul<br class="hidden sm:block" /> Dec 25 – Jan 3
+      </h1>
+      <p class="text-istanbul-100 text-lg md:text-xl max-w-2xl mx-auto mb-8">
+        A 9-night winter escape focused on historic Sultanahmet, the Bosphorus, New Year’s Eve fireworks, food, and cozy neighborhood wandering.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 text-sm">
+        <span class="bg-white/10 backdrop-blur px-4 py-2 rounded-full">📍 Base: Istanbul</span>
+        <span class="bg-white/10 backdrop-blur px-4 py-2 rounded-full">🌡️ 5–11°C • Rain/Snow possible</span>
+        <span class="bg-white/10 backdrop-blur px-4 py-2 rounded-full">🎆 NYE on Bosphorus</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 py-12 space-y-16">
+
+    <!-- OVERVIEW -->
+    <section id="overview">
+      <h2 class="font-display text-3xl font-bold text-istanbul-900 mb-6">Trip Snapshot</h2>
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+          <div class="text-3xl mb-2">🕌</div>
+          <h3 class="font-semibold text-lg mb-1">Focus</h3>
+          <p class="text-slate-600 text-sm">Istanbul’s historic peninsula + modern Beyoğlu, with optional Asian-side and neighborhood deep dives. Pure Istanbul keeps the pace relaxed and weather-flexible.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+          <div class="text-3xl mb-2">🎉</div>
+          <h3 class="font-semibold text-lg mb-1">Highlight</h3>
+          <p class="text-slate-600 text-sm">New Year’s Eve fireworks over the Bosphorus. Book a dinner cruise, rooftop, or waterfront spot weeks ahead — this is the big event.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+          <div class="text-3xl mb-2">❄️</div>
+          <h3 class="font-semibold text-lg mb-1">Season</h3>
+          <p class="text-slate-600 text-sm">Cold, short days, possible rain or light snow. Fewer crowds than summer, lower hotel rates (except NYE week). Perfect for museums, hammams & food.</p>
+        </div>
+      </div>
+
+      <div class="mt-8 bg-istanbul-50 border border-istanbul-100 rounded-2xl p-6">
+        <h3 class="font-semibold text-istanbul-900 mb-3">Quick Notes</h3>
+        <ul class="grid sm:grid-cols-2 gap-2 text-sm text-slate-700">
+          <li>• Arrive Dec 25 → Depart Jan 3 (9 nights)</li>
+          <li>• Stay in Sultanahmet or Beyoğlu/Galata for walkability</li>
+          <li>• Get an Istanbulkart for trams, metro, ferries & buses</li>
+          <li>• Optional: 1–2 night Cappadocia add-on (flights ~1.5 h) if you want fairy chimneys</li>
+          <li>• Book NYE dinner / cruise as early as possible</li>
+          <li>• Most major sights open year-round; check exact hours closer to travel</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ITINERARY -->
+    <section id="itinerary">
+      <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
+        <h2 class="font-display text-3xl font-bold text-istanbul-900">Day-by-Day</h2>
+        <p class="text-sm text-slate-500 no-print">Click any day to expand details</p>
+      </div>
+
+      <div class="space-y-3" id="days-container">
+        <!-- Days injected by JS -->
+      </div>
+    </section>
+
+    <!-- MAP -->
+    <section id="map">
+      <h2 class="font-display text-3xl font-bold text-istanbul-900 mb-2">Key Spots Map</h2>
+      <p class="text-slate-600 mb-5 text-sm">Click markers for quick info. All within easy reach of central Istanbul.</p>
+      <div id="map" class="shadow-md border border-slate-200"></div>
+      <p class="text-xs text-slate-400 mt-2">Map data © OpenStreetMap contributors</p>
+    </section>
+
+    <!-- TIPS -->
+    <section id="tips">
+      <h2 class="font-display text-3xl font-bold text-istanbul-900 mb-6">Practical Tips</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-4">
+          <h3 class="font-semibold text-lg flex items-center gap-2">🌡️ Weather & Packing Mindset</h3>
+          <p class="text-sm text-slate-600">Expect daytime 5–11 °C, nights colder. Rain is common; snow is possible but not guaranteed. Wind off the Bosphorus makes it feel colder. Waterproof coat + layers + grippy shoes are non-negotiable for cobblestones.</p>
+          
+          <h3 class="font-semibold text-lg flex items-center gap-2 pt-2">🚇 Getting Around</h3>
+          <p class="text-sm text-slate-600">Buy an Istanbulkart (available at airports, stations, kiosks). Covers metro, tram, bus, ferry, funicular. Taxis and Uber/BiTaksi are plentiful. Walking is excellent in historic areas.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-4">
+          <h3 class="font-semibold text-lg flex items-center gap-2">💰 Money & Costs</h3>
+          <p class="text-sm text-slate-600">Currency: Turkish Lira (TRY). Cards widely accepted; carry some cash for small vendors and tips. Mid-range daily budget (food + transport + sights) roughly €60–120 pp depending on dining style. NYE will be higher.</p>
+          
+          <h3 class="font-semibold text-lg flex items-center gap-2 pt-2">🎆 New Year’s Eve</h3>
+          <p class="text-sm text-slate-600">Fireworks light up the Bosphorus from multiple points. Popular viewing: Ortaköy, Beşiktaş, Galata, or a dinner cruise. Street celebrations in Taksim get very crowded. Book restaurants and cruises weeks ahead.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 md:col-span-2">
+          <h3 class="font-semibold text-lg mb-3">Optional Add-ons</h3>
+          <div class="grid sm:grid-cols-3 gap-4 text-sm">
+            <div>
+              <p class="font-medium text-istanbul-800">Cappadocia</p>
+              <p class="text-slate-600">1.5 h flight. Better as 1–2 nights for balloons & valleys (weather dependent in winter). Day trips exist but are long.</p>
+            </div>
+            <div>
+              <p class="font-medium text-istanbul-800">Princes’ Islands</p>
+              <p class="text-slate-600">Ferry day trip for quiet walking, bikes, and sea air. Check winter schedules.</p>
+            </div>
+            <div>
+              <p class="font-medium text-istanbul-800">Hammam</p>
+              <p class="text-slate-600">Classic winter treat. Historic options like Cağaloğlu or newer spa-style baths. Book popular ones in advance.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PACKING -->
+    <section id="packing">
+      <h2 class="font-display text-3xl font-bold text-istanbul-900 mb-2">Packing Checklist</h2>
+      <p class="text-slate-600 text-sm mb-5">Tap to check off. Focused on cold, wet, walkable winter conditions.</p>
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-3" id="packing-list">
+          <!-- filled by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="text-center text-sm text-slate-500 pt-8 border-t border-slate-200">
+      <p class="mb-2">Sample itinerary created as a demo interactive web app.</p>
+      <p>Weather, opening hours and events can change — always verify closer to your travel dates.</p>
+      <p class="mt-4 text-xs">Deployed on Vercel • Built with ❤️ for a quick Turkey trip</p>
+    </footer>
+  </main>
+
+  <script>
+    // ===== DAY DATA =====
+    const days = [
+      {
+        date: "Dec 25",
+        day: "Thursday",
+        title: "Arrival & Settle In",
+        emoji: "✈️",
+        summary: "Land in Istanbul, transfer to hotel, gentle first evening.",
+        details: [
+          "Arrive at IST or SAW. Allow 1–1.5 h for transfer + traffic.",
+          "Recommended base: Sultanahmet (historic) or Galata/Karaköy/Beyoğlu (lively, views).",
+          "Light walk if energy allows — perhaps around your neighborhood or a short tram ride to see the skyline.",
+          "Dinner nearby. Early night recommended for jet lag."
+        ],
+        tip: "Have your hotel address written in Turkish for the taxi/driver."
+      },
+      {
+        date: "Dec 26",
+        day: "Friday",
+        title: "Sultanahmet Classics",
+        emoji: "🕌",
+        summary: "Hagia Sophia, Blue Mosque, Hippodrome & Basilica Cistern.",
+        details: [
+          "Start early at Hagia Sophia (book timed tickets if required).",
+          "Cross to the Blue Mosque (Sultan Ahmed Mosque) — modest dress, shoes off.",
+          "Walk the Hippodrome and surrounding park area.",
+          "Descend into the atmospheric Basilica Cistern (Yerebatan).",
+          "Lunch in the area, then free time or more exploring at a relaxed pace."
+        ],
+        tip: "These sites are close together — perfect for a rainy or cold day with indoor options."
+      },
+      {
+        date: "Dec 27",
+        day: "Saturday",
+        title: "Palaces & Bazaars",
+        emoji: "🏰",
+        summary: "Topkapı Palace, Grand Bazaar and Spice Bazaar.",
+        details: [
+          "Morning at Topkapı Palace (and Harem if interested) — allow 2–3 hours.",
+          "Walk or tram to the Grand Bazaar for atmosphere, tea, and browsing (many shops close earlier in winter).",
+          "Continue to the Spice Bazaar (Mısır Çarşısı) for colors, scents, and Turkish delight.",
+          "Evening: Eminönü waterfront or cross to Karaköy for dinner."
+        ],
+        tip: "Bargaining is expected in the bazaars. Enjoy the ritual even if you don’t buy much."
+      },
+      {
+        date: "Dec 28",
+        day: "Sunday",
+        title: "Bosphorus & Beyoğlu",
+        emoji: "🚢",
+        summary: "Cruise the strait, climb Galata Tower, wander Istiklal.",
+        details: [
+          "Morning or afternoon public Bosphorus cruise (short or longer options available).",
+          "Visit Galata Tower for panoramic views (or just the surrounding streets).",
+          "Explore Karaköy and Galata — cafés, street art, independent shops.",
+          "Stroll Istiklal Avenue toward Taksim as evening falls. Festive lights are common around New Year."
+        ],
+        tip: "Ferries are part of the experience — cheap, scenic, and atmospheric in winter light."
+      },
+      {
+        date: "Dec 29",
+        day: "Monday",
+        title: "Neighborhoods & Hammam",
+        emoji: "🛁",
+        summary: "Balat & Fener colors, or Asian side + classic Turkish bath.",
+        details: [
+          "Option A: Colorful Balat and Fener districts (steep streets, street art, cafés, historic churches).",
+          "Option B: Ferry to Üsküdar or Kadıköy on the Asian side for a different pace and food scene.",
+          "Afternoon or evening: Traditional hammam experience — a perfect winter treat (Cağaloğlu or similar historic baths).",
+          "Relaxed dinner afterward."
+        ],
+        tip: "Hammams get busy; book popular ones in advance, especially around the holidays."
+      },
+      {
+        date: "Dec 30",
+        day: "Tuesday",
+        title: "Flexible / Museums / Islands",
+        emoji: "🎨",
+        summary: "Choose museums, shopping, or a Princes’ Islands day trip.",
+        details: [
+          "Istanbul Archaeology Museums or Istanbul Modern for indoor culture.",
+          "Or take a ferry to the Princes’ Islands (Büyükada) for car-free walking and sea air — check winter ferry times.",
+          "Shopping time: modern malls or more boutique areas if desired.",
+          "Keep the day flexible in case of weather."
+        ],
+        tip: "This is a good buffer day before New Year’s Eve energy ramps up."
+      },
+      {
+        date: "Dec 31",
+        day: "Wednesday",
+        title: "New Year’s Eve",
+        emoji: "🎆",
+        summary: "Celebrate with Bosphorus fireworks — the highlight of the trip.",
+        details: [
+          "Keep the daytime relatively light — sleep in, late breakfast, easy stroll.",
+          "Evening options: Bosphorus dinner cruise (book early!), rooftop restaurant with views, hotel gala, or waterfront gathering (Ortaköy / Beşiktaş).",
+          "Fireworks typically light up the skyline and water from multiple points at midnight.",
+          "Taksim and Istiklal will be very crowded — plan transport carefully."
+        ],
+        tip: "NYE menus and cruises sell out. Reserve 3+ weeks ahead if possible."
+      },
+      {
+        date: "Jan 1",
+        day: "Thursday",
+        title: "Recovery & Slow Day",
+        emoji: "☕",
+        summary: "Gentle start to the new year — tea, parks, and easy wandering.",
+        details: [
+          "Sleep in. Long breakfast or brunch.",
+          "Gülhane Park or another green space for fresh air.",
+          "Optional: Whirling Dervish ceremony (evening shows available in historic venues).",
+          "More neighborhood exploration or simply café hopping."
+        ],
+        tip: "Many places may have adjusted hours on Jan 1 — confirm in advance."
+      },
+      {
+        date: "Jan 2",
+        day: "Friday",
+        title: "Last Full Day",
+        emoji: "🛒",
+        summary: "Revisit favorites, final shopping, or a short excursion.",
+        details: [
+          "Return to any missed sights or favorite neighborhoods.",
+          "Souvenir shopping (ceramics, textiles, spices, Turkish delight).",
+          "Optional short trip or simply enjoy being in the city without a checklist.",
+          "Pack and prepare for departure the next day."
+        ],
+        tip: "Leave some buffer time — winter weather can occasionally affect transport."
+      },
+      {
+        date: "Jan 3",
+        day: "Saturday",
+        title: "Departure",
+        emoji: "🛫",
+        summary: "Transfer to the airport and fly home.",
+        details: [
+          "Allow plenty of time for traffic, especially if flying from IST.",
+          "SAW (Sabiha Gökçen) is on the Asian side — factor in extra transfer time.",
+          "Safe travels!"
+        ],
+        tip: "Check airline and airport guidelines for any seasonal notes."
+      }
+    ];
+
+    // Render days
+    const container = document.getElementById('days-container');
+    days.forEach((d, i) => {
+      const el = document.createElement('div');
+      el.className = 'day-card bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden';
+      el.innerHTML = `
+        <button class="w-full text-left px-5 py-4 flex items-center gap-4 hover:bg-slate-50 transition" onclick="toggleDay(${i})">
+          <div class="text-2xl w-10 text-center">${d.emoji}</div>
+          <div class="flex-1 min-w-0">
+            <div class="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
+              <span class="font-semibold text-istanbul-900">${d.date}</span>
+              <span class="text-sm text-slate-500">${d.day}</span>
+            </div>
+            <div class="font-medium text-slate-800 truncate">${d.title}</div>
+            <div class="text-sm text-slate-500 truncate">${d.summary}</div>
+          </div>
+          <svg class="w-5 h-5 text-slate-400 transition-transform duration-300 chevron" id="chevron-${i}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="day-content px-5" id="content-${i}">
+          <div class="pb-5 pt-1 border-t border-slate-100">
+            <ul class="space-y-2 text-sm text-slate-700 mb-4">
+              ${d.details.map(item => `<li class="flex gap-2"><span class="text-istanbul-500 mt-0.5">•</span><span>${item}</span></li>`).join('')}
+            </ul>
+            <div class="bg-istanbul-50 text-istanbul-900 text-sm rounded-xl px-4 py-3 flex gap-2">
+              <span class="font-medium">Tip:</span> <span>${d.tip}</span>
+            </div>
+          </div>
+        </div>
+      `;
+      container.appendChild(el);
+    });
+
+    function toggleDay(i) {
+      const content = document.getElementById(`content-${i}`);
+      const chevron = document.getElementById(`chevron-${i}`);
+      const isOpen = content.classList.contains('open');
+      content.classList.toggle('open');
+      chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+    }
+
+    // Open first day by default
+    setTimeout(() => toggleDay(0), 100);
+
+    // ===== MAP =====
+    const map = L.map('map').setView([41.0082, 28.9784], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    const spots = [
+      { name: "Hagia Sophia", coords: [41.0086, 28.9802], desc: "Iconic Byzantine masterpiece" },
+      { name: "Blue Mosque", coords: [41.0054, 28.9768], desc: "Sultan Ahmed Mosque" },
+      { name: "Topkapı Palace", coords: [41.0115, 28.9833], desc: "Ottoman imperial residence" },
+      { name: "Basilica Cistern", coords: [41.0084, 28.9779], desc: "Underground marvel" },
+      { name: "Grand Bazaar", coords: [41.0106, 28.9681], desc: "Historic covered market" },
+      { name: "Galata Tower", coords: [41.0256, 28.9742], desc: "Panoramic views" },
+      { name: "Spice Bazaar", coords: [41.0166, 28.9706], desc: "Egyptian Bazaar" },
+      { name: "Ortaköy", coords: [41.0554, 29.0270], desc: "Popular NYE waterfront spot" }
+    ];
+
+    spots.forEach(s => {
+      L.marker(s.coords).addTo(map)
+        .bindPopup(`<strong>${s.name}</strong><br>${s.desc}`);
+    });
+
+    // ===== PACKING LIST =====
+    const packingItems = [
+      "Waterproof winter coat",
+      "Warm layers / sweaters",
+      "Thermal base layers",
+      "Waterproof walking shoes with grip",
+      "Scarf, gloves, warm hat",
+      "Compact umbrella",
+      "Comfortable socks (several pairs)",
+      "Modest clothing for mosques",
+      "Power adapter (Type C/F)",
+      "Portable charger",
+      "Reusable water bottle",
+      "Small day backpack",
+      "Any necessary medications",
+      "Copies of passport / travel docs"
+    ];
+
+    const packingEl = document.getElementById('packing-list');
+    packingItems.forEach((item, idx) => {
+      const label = document.createElement('label');
+      label.className = 'checklist-item flex items-center gap-3 cursor-pointer select-none py-1';
+      label.innerHTML = `
+        <input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-istanbul-600 focus:ring-istanbul-500" id="pack-${idx}">
+        <span class="text-sm">${item}</span>
+      `;
+      packingEl.appendChild(label);
+    });
+  </script>
+</body>
+</html>
