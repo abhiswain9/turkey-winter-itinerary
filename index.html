@@ -6,17 +6,43 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>tailwind.config={theme:{extend:{colors:{istanbul:{50:'#f0f7ff',500:'#0c8ce7',800:'#064b84',900:'#0b3f6e',950:'#072849'},gold:{400:'#f5d76e'}}}}}</script>
-<style>body{font-family:Arial,Helvetica,sans-serif}.day-content{max-height:0;overflow:hidden}.day-content.open{max-height:1600px}#map{height:420px;border-radius:1rem}</style>
+<style>body{font-family:Arial,Helvetica,sans-serif}.day-content{max-height:0;overflow:hidden}.day-content.open{max-height:1600px}#map{height:420px;border-radius:1rem}.gmap{width:100%;height:220px;border:0;display:block}</style>
 </head>
 <body class="bg-slate-50 text-slate-800">
 <nav class="sticky top-0 z-50 bg-istanbul-950 text-white"><div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap justify-between gap-2"><div class="font-bold">Turkey Winter Escape</div><div class="text-sm flex flex-wrap gap-3"><a href="#flights">Flights</a><a href="#hotels">Hotels</a><a href="#itinerary">Itinerary</a><a href="#eat">Eat</a></div></div></nav>
 <header class="bg-istanbul-900 text-white text-center py-16 px-4"><p class="text-gold-400 text-sm tracking-widest uppercase mb-2">Working itinerary</p><h1 class="text-4xl md:text-5xl font-bold">Istanbul • Dec 26 – Jan 3</h1><p class="mt-4 max-w-2xl mx-auto text-istanbul-100">Christmas morning at Angela's. You fly out the evening of the 25th. Parents fly BLR → IST and meet you in the city on the 26th.</p></header>
 <main class="max-w-5xl mx-auto px-4 py-12 space-y-16">
-<section id="flights"><h2 class="text-3xl font-bold mb-2">Flights</h2><p class="text-sm text-slate-600 mb-6">Three journeys: you after Christmas morning, parents from Bangalore, then split returns.</p>
+<section id="flights"><h2 class="text-3xl font-bold mb-2">Flights</h2><p class="text-sm text-slate-600 mb-6">Each journey is a Google Maps route embed. Open Google Flights from the link under the map when you are ready to book.</p>
 <div class="grid md:grid-cols-3 gap-4">
-<article class="bg-white rounded-xl border overflow-hidden"><div class="bg-istanbul-900 text-white px-4 py-3"><p class="text-gold-400 text-xs uppercase">You • Outbound</p><h3 class="font-bold">EWR → IST</h3></div><div class="p-4 text-sm text-slate-600 space-y-2"><p><strong>Dec 25 evening only.</strong> Christmas morning is at Angela's — no daytime departure.</p><p>Typical TK nonstop leaves EWR late evening and lands IST the afternoon of <strong>Dec 26</strong>.</p><p>Backup: JFK evening nonstop. Do not book a morning or afternoon 25th flight.</p><p class="font-medium text-slate-800">Airline / PNR: TBD</p></div></article>
-<article class="bg-white rounded-xl border overflow-hidden"><div class="bg-istanbul-800 text-white px-4 py-3"><p class="text-gold-400 text-xs uppercase">Parents • Outbound</p><h3 class="font-bold">BLR → IST</h3></div><div class="p-4 text-sm text-slate-600 space-y-2"><p>Direct Turkish flights are about 8 hours, Kempegowda to Istanbul Airport.</p><p><strong>Target:</strong> land IST on Dec 26 so you meet at the hotel the same day. A BLR overnight arrives early morning IST; a daytime BLR flight arrives late afternoon.</p><p>They can also fly Dec 25 and take the hotel the night before you land.</p><p class="font-medium text-slate-800">Airline / PNR: TBD</p></div></article>
-<article class="bg-white rounded-xl border overflow-hidden"><div class="bg-istanbul-800 text-white px-4 py-3"><p class="text-gold-400 text-xs uppercase">Everyone • Return</p><h3 class="font-bold">IST → EWR / BLR</h3></div><div class="p-4 text-sm text-slate-600 space-y-2"><p><strong>You:</strong> IST → EWR on Jan 3. Leave the hotel 4+ hours early.</p><p><strong>Parents:</strong> IST → BLR on Jan 3 (or a day later). Same ~8 hour hop.</p><p>Do not put both parties on one ticket — different destinations.</p><p class="font-medium text-slate-800">Airline / PNR: TBD</p></div></article>
+<article class="bg-white rounded-xl border overflow-hidden flex flex-col">
+<div class="bg-istanbul-900 text-white px-4 py-3"><p class="text-gold-400 text-xs uppercase">You • Outbound</p><h3 class="font-bold">EWR → IST</h3></div>
+<iframe class="gmap" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="EWR to IST flight route" src="https://maps.google.com/maps?saddr=Newark+Liberty+International+Airport+EWR&daddr=Istanbul+Airport+IST&hl=en&z=3&output=embed"></iframe>
+<div class="p-4 text-sm text-slate-600 space-y-2">
+<p><strong>Dec 25 evening only.</strong> Christmas morning at Angela's — no daytime departure.</p>
+<p>Lands IST the afternoon of <strong>Dec 26</strong>.</p>
+<p><a class="text-istanbul-500 underline" href="https://www.google.com/travel/flights?q=Flights%20from%20EWR%20to%20IST%20on%202026-12-25%20one%20way" target="_blank" rel="noopener">Search this flight on Google</a></p>
+</div></article>
+<article class="bg-white rounded-xl border overflow-hidden flex flex-col">
+<div class="bg-istanbul-800 text-white px-4 py-3"><p class="text-gold-400 text-xs uppercase">Parents • Outbound</p><h3 class="font-bold">BLR → IST</h3></div>
+<iframe class="gmap" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="BLR to IST flight route" src="https://maps.google.com/maps?saddr=Kempegowda+International+Airport+BLR+Bengaluru&daddr=Istanbul+Airport+IST&hl=en&z=3&output=embed"></iframe>
+<div class="p-4 text-sm text-slate-600 space-y-2">
+<p>Direct Turkish hop, about 8 hours.</p>
+<p><strong>Target landing:</strong> Dec 26, same hotel night as you.</p>
+<p><a class="text-istanbul-500 underline" href="https://www.google.com/travel/flights?q=Flights%20from%20BLR%20to%20IST%20on%202026-12-25%20one%20way" target="_blank" rel="noopener">Search this flight on Google</a></p>
+</div></article>
+<article class="bg-white rounded-xl border overflow-hidden flex flex-col">
+<div class="bg-istanbul-800 text-white px-4 py-3"><p class="text-gold-400 text-xs uppercase">Everyone • Return</p><h3 class="font-bold">IST → EWR / BLR</h3></div>
+<iframe class="gmap" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="IST to EWR return route" src="https://maps.google.com/maps?saddr=Istanbul+Airport+IST&daddr=Newark+Liberty+International+Airport+EWR&hl=en&z=3&output=embed"></iframe>
+<div class="p-4 text-sm text-slate-600 space-y-2">
+<p>You: IST → EWR Jan 3. Parents: IST → BLR Jan 3.</p>
+<p><a class="text-istanbul-500 underline" href="https://www.google.com/travel/flights?q=Flights%20from%20IST%20to%20EWR%20on%202027-01-03%20one%20way" target="_blank" rel="noopener">Your return on Google</a>
+ ·
+<a class="text-istanbul-500 underline" href="https://www.google.com/travel/flights?q=Flights%20from%20IST%20to%20BLR%20on%202027-01-03%20one%20way" target="_blank" rel="noopener">Parents return on Google</a></p>
+</div></article>
+</div>
+<div class="mt-5 bg-white rounded-xl border overflow-hidden">
+<p class="px-4 pt-3 text-sm font-medium">Parents return path (IST → BLR)</p>
+<iframe class="gmap" style="height:280px" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="IST to BLR flight route" src="https://maps.google.com/maps?saddr=Istanbul+Airport+IST&daddr=Kempegowda+International+Airport+BLR+Bengaluru&hl=en&z=3&output=embed"></iframe>
 </div>
 <div class="mt-5 bg-istanbul-50 rounded-xl p-4 text-sm">Meet plan: whoever lands first checks into Karakoy and texts the room. You are the later arrival on the 26th.</div>
 </section>
