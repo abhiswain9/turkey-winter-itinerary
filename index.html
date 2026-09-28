@@ -1,78 +1,92 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Turkey Winter Escape</title>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Turkey Winter Escape • Dec 26 – Jan 3</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>tailwind.config={theme:{extend:{colors:{istanbul:{50:'#f0f7ff',500:'#0c8ce7',800:'#064b84',900:'#0b3f6e',950:'#072849'},gold:{400:'#f5d76e'}}}}}</script>
-<style>body{font-family:Arial,Helvetica,sans-serif}.day-content{max-height:0;overflow:hidden}.day-content.open{max-height:1600px}#map{height:420px;border-radius:1rem}.gmap{width:100%;height:220px;border:0;display:block}</style>
+<script>tailwind.config={theme:{extend:{colors:{ink:'#072849',sea:'#0c8ce7',deep:'#0b3f6e',gold:'#e8b923'}}}}</script>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#f4f7fb}
+.hero-wash{background:radial-gradient(circle at 18% 20%,rgba(232,185,35,.16),transparent 42%),radial-gradient(circle at 88% 10%,rgba(12,140,231,.18),transparent 36%),linear-gradient(160deg,#072849 0%,#0b3f6e 55%,#064b84 100%)}
+.nav-link{border-radius:999px;padding:.4rem .85rem}
+.nav-link:hover{background:rgba(255,255,255,.12)}
+.card{background:#fff;border:1px solid #e6edf5;border-radius:1.1rem;box-shadow:0 8px 24px rgba(7,40,73,.05);overflow:hidden}
+.card:hover{box-shadow:0 12px 28px rgba(7,40,73,.08)}
+.label{letter-spacing:.14em;font-size:.68rem;font-weight:700;text-transform:uppercase}
+.gmap{width:100%;height:210px;border:0;display:block}
+.day-content{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.day-content.open{max-height:1400px}
+.slot{border-left:3px solid #0c8ce7;padding-left:.85rem}
+#city-map{height:420px;border-radius:1.1rem;z-index:1}
+a.soft{color:#0c8ce7;text-decoration:none;font-weight:600}
+a.soft:hover{text-decoration:underline}
+</style>
 </head>
-<body class="bg-slate-50 text-slate-800">
-<nav class="sticky top-0 z-50 bg-istanbul-950 text-white"><div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap justify-between gap-2"><div class="font-bold">Turkey Winter Escape</div><div class="text-sm flex flex-wrap gap-3"><a href="#flights">Flights</a><a href="#hotels">Hotels</a><a href="#itinerary">Itinerary</a><a href="#eat">Eat</a></div></div></nav>
-<header class="bg-istanbul-900 text-white text-center py-16 px-4"><p class="text-gold-400 text-sm tracking-widest uppercase mb-2">Working itinerary</p><h1 class="text-4xl md:text-5xl font-bold">Istanbul • Dec 26 – Jan 3</h1><p class="mt-4 max-w-2xl mx-auto text-istanbul-100">Christmas morning at Angela's. You fly out the evening of the 25th. Parents fly BLR → IST and meet you in the city on the 26th.</p></header>
-<main class="max-w-5xl mx-auto px-4 py-12 space-y-16">
-<section id="flights"><h2 class="text-3xl font-bold mb-2">Flights</h2><p class="text-sm text-slate-600 mb-6">Each journey is a Google Maps route embed. Open Google Flights from the link under the map when you are ready to book.</p>
-<div class="grid md:grid-cols-3 gap-4">
-<article class="bg-white rounded-xl border overflow-hidden flex flex-col">
-<div class="bg-istanbul-900 text-white px-4 py-3"><p class="text-gold-400 text-xs uppercase">You • Outbound</p><h3 class="font-bold">EWR → IST</h3></div>
-<iframe class="gmap" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="EWR to IST flight route" src="https://maps.google.com/maps?saddr=Newark+Liberty+International+Airport+EWR&daddr=Istanbul+Airport+IST&hl=en&z=3&output=embed"></iframe>
-<div class="p-4 text-sm text-slate-600 space-y-2">
-<p><strong>Dec 25 evening only.</strong> Christmas morning at Angela's — no daytime departure.</p>
-<p>Lands IST the afternoon of <strong>Dec 26</strong>.</p>
-<p><a class="text-istanbul-500 underline" href="https://www.google.com/travel/flights?q=Flights%20from%20EWR%20to%20IST%20on%202026-12-25%20one%20way" target="_blank" rel="noopener">Search this flight on Google</a></p>
-</div></article>
-<article class="bg-white rounded-xl border overflow-hidden flex flex-col">
-<div class="bg-istanbul-800 text-white px-4 py-3"><p class="text-gold-400 text-xs uppercase">Parents • Outbound</p><h3 class="font-bold">BLR → IST</h3></div>
-<iframe class="gmap" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="BLR to IST flight route" src="https://maps.google.com/maps?saddr=Kempegowda+International+Airport+BLR+Bengaluru&daddr=Istanbul+Airport+IST&hl=en&z=3&output=embed"></iframe>
-<div class="p-4 text-sm text-slate-600 space-y-2">
-<p>Direct Turkish hop, about 8 hours.</p>
-<p><strong>Target landing:</strong> Dec 26, same hotel night as you.</p>
-<p><a class="text-istanbul-500 underline" href="https://www.google.com/travel/flights?q=Flights%20from%20BLR%20to%20IST%20on%202026-12-25%20one%20way" target="_blank" rel="noopener">Search this flight on Google</a></p>
-</div></article>
-<article class="bg-white rounded-xl border overflow-hidden flex flex-col">
-<div class="bg-istanbul-800 text-white px-4 py-3"><p class="text-gold-400 text-xs uppercase">Everyone • Return</p><h3 class="font-bold">IST → EWR / BLR</h3></div>
-<iframe class="gmap" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="IST to EWR return route" src="https://maps.google.com/maps?saddr=Istanbul+Airport+IST&daddr=Newark+Liberty+International+Airport+EWR&hl=en&z=3&output=embed"></iframe>
-<div class="p-4 text-sm text-slate-600 space-y-2">
-<p>You: IST → EWR Jan 3. Parents: IST → BLR Jan 3.</p>
-<p><a class="text-istanbul-500 underline" href="https://www.google.com/travel/flights?q=Flights%20from%20IST%20to%20EWR%20on%202027-01-03%20one%20way" target="_blank" rel="noopener">Your return on Google</a>
- ·
-<a class="text-istanbul-500 underline" href="https://www.google.com/travel/flights?q=Flights%20from%20IST%20to%20BLR%20on%202027-01-03%20one%20way" target="_blank" rel="noopener">Parents return on Google</a></p>
-</div></article>
+<body class="text-slate-800 antialiased">
+<nav class="sticky top-0 z-50 bg-[#072849]/95 backdrop-blur text-white shadow-lg">
+<div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+<div class="font-bold tracking-tight text-lg"><span class="text-gold">✦</span> Turkey Winter Escape</div>
+<div class="flex flex-wrap gap-1 text-sm">
+<a class="nav-link" href="#flights">Flights</a>
+<a class="nav-link" href="#hotels">Hotels</a>
+<a class="nav-link" href="#itinerary">Itinerary</a>
+<a class="nav-link" href="#eat">Eat</a>
+<a class="nav-link" href="#map">Map</a>
+</div></div></nav>
+<header class="hero-wash text-white">
+<div class="max-w-5xl mx-auto px-4 py-16 md:py-24 text-center">
+<p class="label text-gold mb-3">Working itinerary</p>
+<h1 class="text-4xl md:text-6xl font-bold leading-tight">Istanbul<br class="hidden sm:block"/> Dec 26 – Jan 3</h1>
+<p class="mt-5 text-lg text-blue-100 max-w-2xl mx-auto">Christmas morning at Angela’s. You leave Newark that evening. Parents fly Bangalore → Istanbul and you meet at the hotel on the 26th.</p>
+<div class="mt-8 flex flex-wrap justify-center gap-3 text-sm">
+<span class="bg-white/10 backdrop-blur px-4 py-2 rounded-full">EWR evening Dec 25</span>
+<span class="bg-white/10 backdrop-blur px-4 py-2 rounded-full">Parents from BLR</span>
+<span class="bg-white/10 backdrop-blur px-4 py-2 rounded-full">8 nights in Karakoy</span>
+</div></div></header>
+<main class="max-w-5xl mx-auto px-4 py-14 space-y-16">
+<section id="flights">
+<div class="mb-6"><p class="label text-sea">Travel</p><h2 class="text-3xl font-bold text-ink mt-1">Flights</h2><p class="text-slate-600 mt-2">Google Maps route on each card. Use the Google Flights link when you are ready to book.</p></div>
+<div class="grid md:grid-cols-3 gap-5">
+<article class="card flex flex-col"><div class="bg-ink text-white px-5 py-4"><p class="label text-gold">You · outbound</p><h3 class="text-xl font-bold mt-1">EWR → IST</h3></div>
+<iframe class="gmap" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="EWR to IST" src="https://maps.google.com/maps?saddr=Newark+Liberty+International+Airport+EWR&daddr=Istanbul+Airport+IST&hl=en&z=3&output=embed"></iframe>
+<div class="p-5 text-sm text-slate-600 space-y-2 flex-1"><p><span class="font-semibold text-ink">Dec 25 evening only.</span> Christmas morning stays at Angela’s.</p><p>Typical nonstop lands Istanbul the afternoon of <span class="font-semibold text-ink">Dec 26</span>.</p><p><a class="soft" href="https://www.google.com/travel/flights?q=Flights%20from%20EWR%20to%20IST%20on%202026-12-25%20one%20way" target="_blank" rel="noopener">Search this flight on Google</a></p></div></article>
+<article class="card flex flex-col"><div class="bg-deep text-white px-5 py-4"><p class="label text-gold">Parents · outbound</p><h3 class="text-xl font-bold mt-1">BLR → IST</h3></div>
+<iframe class="gmap" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="BLR to IST" src="https://maps.google.com/maps?saddr=Kempegowda+International+Airport+BLR+Bengaluru&daddr=Istanbul+Airport+IST&hl=en&z=3&output=embed"></iframe>
+<div class="p-5 text-sm text-slate-600 space-y-2 flex-1"><p>Direct Turkish hop, about 8 hours.</p><p><span class="font-semibold text-ink">Target landing:</span> Dec 26, same hotel night.</p><p><a class="soft" href="https://www.google.com/travel/flights?q=Flights%20from%20BLR%20to%20IST%20on%202026-12-25%20one%20way" target="_blank" rel="noopener">Search this flight on Google</a></p></div></article>
+<article class="card flex flex-col"><div class="bg-deep text-white px-5 py-4"><p class="label text-gold">Everyone · return</p><h3 class="text-xl font-bold mt-1">IST → EWR / BLR</h3></div>
+<iframe class="gmap" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="IST to EWR" src="https://maps.google.com/maps?saddr=Istanbul+Airport+IST&daddr=Newark+Liberty+International+Airport+EWR&hl=en&z=3&output=embed"></iframe>
+<div class="p-5 text-sm text-slate-600 space-y-2 flex-1"><p>You home to Newark Jan 3. Parents home to Bangalore Jan 3. Separate tickets.</p><p><a class="soft" href="https://www.google.com/travel/flights?q=Flights%20from%20IST%20to%20EWR%20on%202027-01-03%20one%20way" target="_blank" rel="noopener">Your return</a> · <a class="soft" href="https://www.google.com/travel/flights?q=Flights%20from%20IST%20to%20BLR%20on%202027-01-03%20one%20way" target="_blank" rel="noopener">Parents return</a></p></div></article>
 </div>
-<div class="mt-5 bg-white rounded-xl border overflow-hidden">
-<p class="px-4 pt-3 text-sm font-medium">Parents return path (IST → BLR)</p>
-<iframe class="gmap" style="height:280px" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="IST to BLR flight route" src="https://maps.google.com/maps?saddr=Istanbul+Airport+IST&daddr=Kempegowda+International+Airport+BLR+Bengaluru&hl=en&z=3&output=embed"></iframe>
-</div>
-<div class="mt-5 bg-istanbul-50 rounded-xl p-4 text-sm">Meet plan: whoever lands first checks into Karakoy and texts the room. You are the later arrival on the 26th.</div>
+<div class="card mt-5"><div class="px-5 pt-4 pb-2 flex items-center justify-between"><p class="font-semibold text-ink">Parents return path · IST → BLR</p><span class="label text-slate-400">Jan 3</span></div>
+<iframe class="gmap" style="height:280px" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="IST to BLR" src="https://maps.google.com/maps?saddr=Istanbul+Airport+IST&daddr=Kempegowda+International+Airport+BLR+Bengaluru&hl=en&z=3&output=embed"></iframe></div>
+<div class="mt-5 rounded-2xl bg-[#e8f3fc] border border-sky-100 px-5 py-4 text-sm text-slate-700">Meet plan: whoever lands first checks into Karakoy and texts the room. You are the later arrival on the 26th.</div>
 </section>
-<section id="hotels"><h2 class="text-3xl font-bold mb-2">Hotels</h2><p class="text-sm text-slate-600 mb-4">8 hotel nights (Dec 26 check-in → Jan 3 checkout). Two rooms, same building.</p>
-<div class="grid md:grid-cols-3 gap-4">
-<div class="bg-white p-5 rounded-xl border-2 border-istanbul-500"><p class="text-xs uppercase text-istanbul-500 font-bold">Lead pick</p><h3 class="font-bold mt-1">The Bank Hotel, Karakoy</h3><p class="text-sm text-slate-600 mt-2">Two rooms on the same floor if possible.</p></div>
-<div class="bg-white p-5 rounded-xl border"><p class="text-xs uppercase text-slate-400 font-bold">Alt</p><h3 class="font-bold mt-1">Vault Karakoy</h3><p class="text-sm text-slate-600 mt-2">Quieter street if The Bank cannot do two rooms.</p></div>
-<div class="bg-white p-5 rounded-xl border"><p class="text-xs uppercase text-slate-400 font-bold">Old city</p><h3 class="font-bold mt-1">Hotel Amira / Romance</h3><p class="text-sm text-slate-600 mt-2">Only if everyone wants monuments at the door.</p></div>
+<section id="hotels"><div class="mb-6"><p class="label text-sea">Stay</p><h2 class="text-3xl font-bold text-ink mt-1">Hotels</h2><p class="text-slate-600 mt-2">Eight nights, Dec 26 in → Jan 3 out. Two rooms in the same building.</p></div>
+<div class="grid md:grid-cols-3 gap-5">
+<article class="card p-6" style="border:2px solid #0c8ce7"><p class="label text-sea">Lead pick</p><h3 class="text-lg font-bold text-ink mt-2">The Bank Hotel, Karakoy</h3><p class="text-sm text-slate-600 mt-2">Restored bank, roof toward Galata, tram and ferry downstairs. Ask for two rooms on the same floor.</p></article>
+<article class="card p-6"><p class="label text-slate-400">Alt</p><h3 class="text-lg font-bold text-ink mt-2">Vault Karakoy</h3><p class="text-sm text-slate-600 mt-2">Quieter street on Bankalar Caddesi if The Bank cannot hold two rooms through NYE week.</p></article>
+<article class="card p-6"><p class="label text-slate-400">Old city</p><h3 class="text-lg font-bold text-ink mt-2">Hotel Amira / Romance</h3><p class="text-sm text-slate-600 mt-2">Only if everyone wants Hagia Sophia at the door. Evenings then need a tram to Karakoy.</p></article>
 </div></section>
-<section id="itinerary"><h2 class="text-3xl font-bold mb-4">Day-by-Day</h2><div id="days-container" class="space-y-3"></div></section>
-<section id="eat"><h2 class="text-3xl font-bold mb-4">Restaurants</h2><div class="grid md:grid-cols-2 gap-4"><div class="bg-white p-5 rounded-xl border"><h3 class="font-bold">NYE</h3><p class="text-sm text-slate-600 mt-2">Mikla, 360 Istanbul, or Asmali Cavit. Table for the full group.</p></div><div class="bg-white p-5 rounded-xl border"><h3 class="font-bold">Karakoy</h3><p class="text-sm text-slate-600 mt-2">Karakoy Lokantasi the first night you are all in town.</p></div></div></section>
-<section id="map"><h2 class="text-3xl font-bold mb-4">Map</h2><div id="map" class="border"></div></section>
+<section id="itinerary"><div class="mb-6"><p class="label text-sea">On the ground</p><h2 class="text-3xl font-bold text-ink mt-1">Day-by-Day</h2><p class="text-slate-600 mt-2">Morning, afternoon, evening — click a day.</p></div><div id="days-container" class="space-y-3"></div></section>
+<section id="eat"><div class="mb-6"><p class="label text-sea">Table</p><h2 class="text-3xl font-bold text-ink mt-1">Restaurants</h2></div>
+<div class="grid md:grid-cols-2 gap-5">
+<article class="card p-6"><p class="label text-sea">Book first</p><h3 class="font-bold text-ink mt-2">New Year’s Eve</h3><p class="text-sm text-slate-600 mt-2">Mikla, 360 Istanbul, or Asmali Cavit. One table for the full group.</p></article>
+<article class="card p-6"><p class="label text-sea">Most nights</p><h3 class="font-bold text-ink mt-2">Karakoy</h3><p class="text-sm text-slate-600 mt-2">Karakoy Lokantasi the first night you are all in town. Also Neolokal, Ali Ocakbasi, Yeni Lokanta.</p></article>
+<article class="card p-6"><p class="label text-sea">Old city</p><h3 class="font-bold text-ink mt-2">When you stay south</h3><p class="text-sm text-slate-600 mt-2">Deraliye, Grace Rooftop, or kofte one street off Divanyolu.</p></article>
+<article class="card p-6"><p class="label text-sea">No reservation</p><h3 class="font-bold text-ink mt-2">Casual</h3><p class="text-sm text-slate-600 mt-2">Balik ekmek at Eminonu, Gulluoglu baklava, Cesme Bazlama breakfast, Kadikoy if you ferry to Asia.</p></article>
+</div></section>
+<section id="map"><div class="mb-6"><p class="label text-sea">City</p><h2 class="text-3xl font-bold text-ink mt-1">Key spots</h2></div><div id="city-map" class="card"></div></section>
+<footer class="text-center text-sm text-slate-500 pt-4 pb-8">Working itinerary — flight numbers still TBD.</footer>
 </main>
 <script>
-const days=[
-{date:'Dec 25',title:'Christmas + fly',morning:'Christmas morning at Angela\'s. No airport until after that.',afternoon:'Pack and get to EWR by early evening.',evening:'EWR to IST overnight. No Istanbul time today.',tip:'Evening departure only.'},
-{date:'Dec 26',title:'Land and meet',morning:'Parents who flew BLR overnight land early and check in. You are still in the air.',afternoon:'You land IST and transfer to Karakoy.',evening:'First dinner together at Karakoy Lokantasi. No museums.',tip:'Whoever lands first holds the rooms.'},
-{date:'Dec 27',title:'Sultanahmet',morning:'Hagia Sophia at opening, then the Blue Mosque.',afternoon:'Basilica Cistern and Hippodrome.',evening:'Tram back to Karakoy or Grace Rooftop.',tip:'First full sightseeing day.'},
-{date:'Dec 28',title:'Palace and bazaars',morning:'Topkapi plus Harem.',afternoon:'Grand Bazaar, then Spice Bazaar.',evening:'Eminonu dusk, dinner across Galata Bridge.',tip:'Monday bazaars are open.'},
-{date:'Dec 29',title:'Water and Beyoglu',morning:'Public Bosphorus cruise.',afternoon:'Galata Tower square.',evening:'Istiklal. Yeni Lokanta or Asmali Cavit.',tip:'Easy jet-lag day.'},
-{date:'Dec 30',title:'Neighborhoods + hammam',morning:'Balat/Fener or ferry to Asia.',afternoon:'Stay on one side of the water.',evening:'Hammam, quiet dinner.',tip:'Book the hammam for the group.'},
-{date:'Dec 31',title:'New Year Eve',morning:'Sleep in.',afternoon:'One short walk. Layers for midnight wind.',evening:'Reserved table. Fireworks at midnight.',tip:'Do not cross the city at 23:00.'},
-{date:'Jan 1',title:'Slow new year',morning:'Brunch.',afternoon:'Park or a no-agenda ferry.',evening:'Optional dervishes or cafes.',tip:'Hours are uneven.'},
-{date:'Jan 2',title:'Last full day',morning:'One favorite place.',afternoon:'Gifts.',evening:'Best meal of the week.',tip:'Pack tonight.'},
-{date:'Jan 3',title:'Split departures',morning:'You: IST to EWR. Parents: IST to BLR.',afternoon:'Two flights, two directions.',evening:'You land EWR. Parents land BLR the next morning.',tip:'Do not connect these tickets.'}
-];
+const days=[{date:'Dec 25',title:'Christmas + fly',morning:'Christmas morning at Angela\'s. No airport until after that.',afternoon:'Pack and get to EWR by early evening.',evening:'EWR to IST overnight. No Istanbul time today.',tip:'Evening departure only.'},{date:'Dec 26',title:'Land and meet',morning:'Parents who flew BLR overnight land early and check in. You are still in the air.',afternoon:'You land IST and transfer to Karakoy.',evening:'First dinner together at Karakoy Lokantasi. No museums.',tip:'Whoever lands first holds the rooms.'},{date:'Dec 27',title:'Sultanahmet',morning:'Hagia Sophia at opening, then the Blue Mosque.',afternoon:'Basilica Cistern and Hippodrome.',evening:'Tram back to Karakoy or Grace Rooftop.',tip:'First full sightseeing day.'},{date:'Dec 28',title:'Palace and bazaars',morning:'Topkapi plus Harem.',afternoon:'Grand Bazaar, then Spice Bazaar.',evening:'Eminonu dusk, dinner across Galata Bridge.',tip:'Monday bazaars are open.'},{date:'Dec 29',title:'Water and Beyoglu',morning:'Public Bosphorus cruise.',afternoon:'Galata Tower square.',evening:'Istiklal. Yeni Lokanta or Asmali Cavit.',tip:'Easy jet-lag day.'},{date:'Dec 30',title:'Neighborhoods + hammam',morning:'Balat/Fener or ferry to Asia.',afternoon:'Stay on one side of the water.',evening:'Hammam, quiet dinner.',tip:'Book the hammam for the group.'},{date:'Dec 31',title:'New Year Eve',morning:'Sleep in.',afternoon:'One short walk. Layers for midnight wind.',evening:'Reserved table. Fireworks at midnight.',tip:'Do not cross the city at 23:00.'},{date:'Jan 1',title:'Slow new year',morning:'Brunch.',afternoon:'Park or a no-agenda ferry.',evening:'Optional dervishes or cafes.',tip:'Hours are uneven.'},{date:'Jan 2',title:'Last full day',morning:'One favorite place.',afternoon:'Gifts.',evening:'Best meal of the week.',tip:'Pack tonight.'},{date:'Jan 3',title:'Split departures',morning:'You: IST to EWR. Parents: IST to BLR.',afternoon:'Two flights, two directions.',evening:'You land EWR. Parents land BLR the next morning.',tip:'Do not connect these tickets.'}];
 const box=document.getElementById('days-container');
-days.forEach((d,i)=>{const el=document.createElement('div');el.className='bg-white rounded-xl border overflow-hidden';el.innerHTML='<button class="w-full text-left px-5 py-4 font-semibold" onclick="document.getElementById(\x27c'+i+'\x27).classList.toggle(\x27open\x27)">'+d.date+' \u2014 '+d.title+'</button><div id="c'+i+'" class="day-content px-5"><div class="pb-4 text-sm space-y-2"><p><b>Morning.</b> '+d.morning+'</p><p><b>Afternoon.</b> '+d.afternoon+'</p><p><b>Evening.</b> '+d.evening+'</p><p class="text-slate-500">'+d.tip+'</p></div></div>';box.appendChild(el)});
+days.forEach((d,i)=>{const el=document.createElement('div');el.className='card';el.innerHTML='<button class="w-full text-left px-5 py-4 flex items-center justify-between gap-4 hover:bg-slate-50" onclick="document.getElementById(\x27c'+i+'\x27).classList.toggle(\x27open\x27)"><span><span class="block text-sea text-xs font-bold tracking-wide">'+d.date+'</span><span class="font-semibold text-ink">'+d.title+'</span></span><span class="text-slate-400 text-lg">+</span></button><div id="c'+i+'" class="day-content px-5"><div class="pb-5 pt-1 border-t border-slate-100 space-y-3 text-sm text-slate-700"><div class="slot"><p class="font-semibold text-ink">Morning</p><p>'+d.morning+'</p></div><div class="slot"><p class="font-semibold text-ink">Afternoon</p><p>'+d.afternoon+'</p></div><div class="slot"><p class="font-semibold text-ink">Evening</p><p>'+d.evening+'</p></div><p class="rounded-xl bg-[#e8f3fc] px-4 py-3 text-ink"><b>Tip.</b> '+d.tip+'</p></div></div>';box.appendChild(el)});
 document.getElementById('c0').classList.add('open');
-const map=L.map('map').setView([41.02,28.98],13);
+const map=L.map('city-map').setView([41.02,28.98],13);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'OSM'}).addTo(map);
 [[41.0086,28.9802,'Hagia Sophia'],[41.0252,28.9748,'Karakoy hotels']].forEach(s=>L.marker([s[0],s[1]]).addTo(map).bindPopup(s[2]));
 </script></body></html>
