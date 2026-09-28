@@ -7,136 +7,67 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>tailwind.config={theme:{extend:{colors:{istanbul:{50:'#f0f7ff',100:'#e0effe',200:'#b9dffd',300:'#7cc5fb',400:'#36a7f6',500:'#0c8ce7',600:'#006fc5',700:'#0158a0',800:'#064b84',900:'#0b3f6e',950:'#072849'},gold:{400:'#f5d76e',500:'#e8b923',600:'#c99a0f'}},fontFamily:{sans:['Arial','Helvetica','sans-serif'],display:['Arial','Helvetica','sans-serif']}}}}</script>
-<style>body{font-family:Arial,Helvetica,sans-serif}.day-card{transition:all .25s ease}.day-card:hover{transform:translateY(-2px)}.day-card.focused{box-shadow:0 0 0 3px rgba(12,140,231,.4)}.day-content{max-height:0;overflow:hidden;transition:max-height .4s ease}.day-content.open{max-height:900px}#map{height:420px;border-radius:1rem;z-index:1}.checklist-item input:checked+span{text-decoration:line-through;opacity:.6}.cal-day{min-width:3.1rem;transition:all .2s ease}.cal-day.active{background:#0c8ce7!important;color:#fff!important;box-shadow:0 4px 12px rgba(12,140,231,.35)}.cal-day.focused{outline:2px solid #e8b923;outline-offset:2px}.hero-pattern{background-image:radial-gradient(circle at 20% 50%,rgba(255,255,255,.08) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(245,215,110,.1) 0%,transparent 40%)}</style>
+<script>tailwind.config={theme:{extend:{colors:{istanbul:{50:'#f0f7ff',500:'#0c8ce7',800:'#064b84',900:'#0b3f6e',950:'#072849'},gold:{400:'#f5d76e'}}}}}</script>
+<style>body{font-family:Arial,Helvetica,sans-serif}.day-content{max-height:0;overflow:hidden}.day-content.open{max-height:1600px}#map{height:420px;border-radius:1rem}.cal-day.active{background:#0c8ce7!important;color:#fff!important}</style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased">
-<nav class="sticky top-0 z-50 bg-istanbul-950/95 backdrop-blur-md text-white shadow-lg no-print">
-<div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-<div class="font-display text-xl font-bold tracking-tight"><span class="text-gold-400">✦</span> Turkey Winter Escape</div>
-<div class="flex flex-wrap gap-1 text-sm">
-<a href="#overview" class="px-3 py-1.5 rounded-full hover:bg-white/10 transition">Overview</a>
-<a href="#flights" class="px-3 py-1.5 rounded-full hover:bg-white/10 transition">Flights</a>
-<a href="#itinerary" class="px-3 py-1.5 rounded-full hover:bg-white/10 transition">Itinerary</a>
-<a href="#map" class="px-3 py-1.5 rounded-full hover:bg-white/10 transition">Map</a>
-<a href="#tips" class="px-3 py-1.5 rounded-full hover:bg-white/10 transition">Tips</a>
-<a href="#packing" class="px-3 py-1.5 rounded-full hover:bg-white/10 transition">Packing</a>
+<body class="bg-slate-50">
+<nav class="sticky top-0 z-50 bg-istanbul-950 text-white">
+<div class="max-w-5xl mx-auto px-4 py-3 flex justify-between flex-wrap gap-2">
+<div class="font-bold">Turkey Winter Escape</div>
+<div class="text-sm flex flex-wrap gap-2">
+<a href="#hotels" class="hover:underline">Hotels</a>
+<a href="#itinerary" class="hover:underline">Itinerary</a>
+<a href="#eat" class="hover:underline">Eat</a>
+<a href="#flights" class="hover:underline">Flights</a>
 </div></div></nav>
-<div id="sticky-calendar" class="sticky top-[52px] z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm no-print">
-<div class="max-w-5xl mx-auto px-3 py-2.5">
-<div class="flex items-center gap-2 overflow-x-auto pb-1"><span class="text-xs font-semibold text-slate-500 uppercase tracking-wider whitespace-nowrap mr-1">Dates</span><div id="calendar-days" class="flex gap-1.5"></div></div>
-<p class="text-[11px] text-slate-400 mt-1 hidden sm:block">Click a date to jump &amp; focus</p>
-</div></div>
-<header class="bg-gradient-to-br from-istanbul-900 via-istanbul-800 to-istanbul-950 text-white hero-pattern">
-<div class="max-w-5xl mx-auto px-4 py-16 md:py-24 text-center">
-<p class="text-gold-400 font-medium tracking-widest uppercase text-sm mb-3">Sample Itinerary</p>
-<h1 class="font-display text-4xl md:text-6xl font-bold leading-tight mb-4">Istanbul<br class="hidden sm:block" /> Dec 25 – Jan 3</h1>
-<p class="text-istanbul-100 text-lg md:text-xl max-w-2xl mx-auto mb-8">A 9-night winter escape focused on historic Sultanahmet, the Bosphorus, New Year’s Eve fireworks, food, and cozy neighborhood wandering.</p>
-<div class="flex flex-wrap justify-center gap-4 text-sm">
-<span class="bg-white/10 backdrop-blur px-4 py-2 rounded-full">📍 Base: Istanbul</span>
-<span class="bg-white/10 backdrop-blur px-4 py-2 rounded-full">🌡️ 5–11°C • Rain/Snow possible</span>
-<span class="bg-white/10 backdrop-blur px-4 py-2 rounded-full">🎆 NYE on Bosphorus</span>
-</div></div></header>
+<header class="bg-istanbul-900 text-white text-center py-16"><h1 class="text-5xl font-bold">Istanbul Dec 25 – Jan 3</h1>
+<p class="mt-4 text-istanbul-100">Hotels, restaurants, and days split into morning / afternoon / evening.</p></header>
 <main class="max-w-5xl mx-auto px-4 py-12 space-y-16">
-<section id="overview">
-<h2 class="font-display text-3xl font-bold text-istanbul-900 mb-6">Trip Snapshot</h2>
-<div class="grid md:grid-cols-3 gap-5">
-<div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100"><div class="text-3xl mb-2">🕌</div><h3 class="font-semibold text-lg mb-1">Focus</h3><p class="text-slate-600 text-sm">Istanbul’s historic peninsula + modern Beyoğlu, with optional Asian-side and neighborhood deep dives.</p></div>
-<div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100"><div class="text-3xl mb-2">🎉</div><h3 class="font-semibold text-lg mb-1">Highlight</h3><p class="text-slate-600 text-sm">New Year’s Eve fireworks over the Bosphorus. Book a dinner cruise, rooftop, or waterfront spot weeks ahead.</p></div>
-<div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100"><div class="text-3xl mb-2">❄️</div><h3 class="font-semibold text-lg mb-1">Season</h3><p class="text-slate-600 text-sm">Cold, short days, possible rain or light snow. Perfect for museums, hammams &amp; food.</p></div>
-</div>
-<div class="mt-8 bg-istanbul-50 border border-istanbul-100 rounded-2xl p-6">
-<h3 class="font-semibold text-istanbul-900 mb-3">Quick Notes</h3>
-<ul class="grid sm:grid-cols-2 gap-2 text-sm text-slate-700">
-<li>• Arrive Dec 25 → Depart Jan 3 (9 nights)</li>
-<li>• Two flight journeys: outbound (home → IST) and return (IST → home)</li>
-<li>• Stay in Sultanahmet or Beyoğlu/Galata for walkability</li>
-<li>• Get an Istanbulkart for trams, metro, ferries &amp; buses</li>
-<li>• Book NYE dinner / cruise as early as possible</li>
-<li>• Most major sights open year-round</li>
-</ul></div></section>
-<section id="flights">
-<div class="flex flex-wrap items-end justify-between gap-4 mb-2">
-<h2 class="font-display text-3xl font-bold text-istanbul-900">Flights</h2>
-<p class="text-sm text-slate-500">Two journeys to map: outbound + return</p>
-</div>
-<p class="text-slate-600 text-sm mb-6">Working sketch from the New York / New Jersey area (EWR/JFK) into Istanbul Airport (IST). Airline, flight numbers, and exact times are placeholders until tickets are booked.</p>
-<div class="grid md:grid-cols-2 gap-5">
-<article class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col">
-<div class="bg-istanbul-900 text-white px-5 py-4 flex items-start justify-between gap-3">
-<div><p class="text-gold-400 text-xs font-semibold tracking-widest uppercase">Journey 1 • Outbound</p><h3 class="font-display text-xl font-bold mt-1">Home → Istanbul</h3><p class="text-istanbul-100 text-sm mt-1">Arrive Dec 25 for Day 1 of the itinerary</p></div><span class="text-3xl">✈️</span>
-</div>
-<div class="p-5 flex-1 space-y-4">
-<div class="flex items-center justify-between text-sm">
-<div><p class="text-xs uppercase tracking-wide text-slate-400">Depart</p><p class="font-semibold text-istanbul-900 text-lg">EWR</p><p class="text-slate-500">Newark</p></div>
-<div class="flex-1 px-3 text-center"><p class="text-xs text-slate-400">~10–12 hrs direct / ~13–16 hrs 1-stop</p><div class="h-px bg-slate-200 relative my-2"><span class="absolute left-1/2 -translate-x-1/2 -top-2 text-istanbul-500">→</span></div><p class="text-xs font-medium text-slate-600">Dec 24 evening → Dec 25 arrival</p></div>
-<div class="text-right"><p class="text-xs uppercase tracking-wide text-slate-400">Arrive</p><p class="font-semibold text-istanbul-900 text-lg">IST</p><p class="text-slate-500">Istanbul Airport</p></div>
-</div>
-<div class="bg-slate-50 rounded-xl p-4 text-sm space-y-2">
-<p class="font-semibold text-slate-800">Legs to lock in</p>
-<ol class="list-decimal list-inside space-y-1 text-slate-600">
-<li>Preferred: <strong>EWR → IST</strong> overnight (Turkish Airlines often flies this nonstop).</li>
-<li>Backup: <strong>JFK → IST</strong> or 1-stop via AMS/FRA.</li>
-<li>Target arrival: afternoon/evening Dec 25 so Day 1 stays a settle-in night.</li>
-</ol></div>
-<dl class="grid grid-cols-2 gap-3 text-sm">
-<div class="rounded-xl border border-slate-100 p-3"><dt class="text-xs uppercase tracking-wide text-slate-400">Airline / flight</dt><dd class="font-medium text-slate-800 mt-0.5">TBD — add once booked</dd></div>
-<div class="rounded-xl border border-slate-100 p-3"><dt class="text-xs uppercase tracking-wide text-slate-400">Confirmation</dt><dd class="font-medium text-slate-800 mt-0.5">TBD</dd></div>
-<div class="rounded-xl border border-slate-100 p-3"><dt class="text-xs uppercase tracking-wide text-slate-400">Airport transfer</dt><dd class="font-medium text-slate-800 mt-0.5">IST → hotel ~60–90 min</dd></div>
-<div class="rounded-xl border border-slate-100 p-3"><dt class="text-xs uppercase tracking-wide text-slate-400">Avoid if possible</dt><dd class="font-medium text-slate-800 mt-0.5">SAW (Asian side, longer transfer)</dd></div>
-</dl></div></article>
-<article class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col">
-<div class="bg-istanbul-800 text-white px-5 py-4 flex items-start justify-between gap-3">
-<div><p class="text-gold-400 text-xs font-semibold tracking-widest uppercase">Journey 2 • Return</p><h3 class="font-display text-xl font-bold mt-1">Istanbul → Home</h3><p class="text-istanbul-100 text-sm mt-1">Leave Jan 3 after the last hotel night</p></div><span class="text-3xl">🛫</span>
-</div>
-<div class="p-5 flex-1 space-y-4">
-<div class="flex items-center justify-between text-sm">
-<div><p class="text-xs uppercase tracking-wide text-slate-400">Depart</p><p class="font-semibold text-istanbul-900 text-lg">IST</p><p class="text-slate-500">Istanbul Airport</p></div>
-<div class="flex-1 px-3 text-center"><p class="text-xs text-slate-400">~10–12 hrs direct / ~13–16 hrs 1-stop</p><div class="h-px bg-slate-200 relative my-2"><span class="absolute left-1/2 -translate-x-1/2 -top-2 text-istanbul-500">→</span></div><p class="text-xs font-medium text-slate-600">Jan 3 daytime / afternoon departure</p></div>
-<div class="text-right"><p class="text-xs uppercase tracking-wide text-slate-400">Arrive</p><p class="font-semibold text-istanbul-900 text-lg">EWR</p><p class="text-slate-500">Newark (same day)</p></div>
-</div>
-<div class="bg-slate-50 rounded-xl p-4 text-sm space-y-2">
-<p class="font-semibold text-slate-800">Legs to lock in</p>
-<ol class="list-decimal list-inside space-y-1 text-slate-600">
-<li>Preferred: <strong>IST → EWR</strong> so you land back in New Jersey.</li>
-<li>Backup: <strong>IST → JFK</strong> + PATH / AirTrain / car into Union City.</li>
-<li>Leave the hotel 4+ hours before departure — IST is far from the old city.</li>
-</ol></div>
-<dl class="grid grid-cols-2 gap-3 text-sm">
-<div class="rounded-xl border border-slate-100 p-3"><dt class="text-xs uppercase tracking-wide text-slate-400">Airline / flight</dt><dd class="font-medium text-slate-800 mt-0.5">TBD — add once booked</dd></div>
-<div class="rounded-xl border border-slate-100 p-3"><dt class="text-xs uppercase tracking-wide text-slate-400">Confirmation</dt><dd class="font-medium text-slate-800 mt-0.5">TBD</dd></div>
-<div class="rounded-xl border border-slate-100 p-3"><dt class="text-xs uppercase tracking-wide text-slate-400">Hotel → IST</dt><dd class="font-medium text-slate-800 mt-0.5">Allow 90–120 min + check-in</dd></div>
-<div class="rounded-xl border border-slate-100 p-3"><dt class="text-xs uppercase tracking-wide text-slate-400">Buffer</dt><dd class="font-medium text-slate-800 mt-0.5">No tight connections on NYE week</dd></div>
-</dl></div></article>
-</div>
-<div class="mt-6 bg-istanbul-50 border border-istanbul-100 rounded-2xl p-6">
-<h3 class="font-semibold text-istanbul-900 mb-3">How to finish this map</h3>
-<ul class="grid sm:grid-cols-2 gap-2 text-sm text-slate-700">
-<li>• Drop in airline + flight numbers for both journeys</li>
-<li>• Confirm IST (not SAW) unless the fare is meaningfully better</li>
-<li>• Keep outbound and return on one ticket if possible</li>
-<li>• Send confirmation details and we will pin them on these cards</li>
-</ul></div>
-</section>
-<section id="itinerary"><div class="flex flex-wrap items-end justify-between gap-4 mb-6"><h2 class="font-display text-3xl font-bold text-istanbul-900">Day-by-Day</h2><p class="text-sm text-slate-500 no-print">Click any day to expand details</p></div><div class="space-y-3" id="days-container"></div></section>
-<section id="map"><h2 class="font-display text-3xl font-bold text-istanbul-900 mb-2">Key Spots Map</h2><p class="text-slate-600 mb-5 text-sm">Click markers for quick info.</p><div id="map" class="shadow-md border border-slate-200"></div></section>
-<section id="tips"><h2 class="font-display text-3xl font-bold text-istanbul-900 mb-6">Practical Tips</h2><div class="grid md:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-4"><h3 class="font-semibold text-lg">Weather</h3><p class="text-sm text-slate-600">Expect 5–11 °C, rain common, snow possible. Waterproof coat + layers + grippy shoes.</p><h3 class="font-semibold text-lg pt-2">Getting Around</h3><p class="text-sm text-slate-600">Buy an Istanbulkart. Covers metro, tram, bus, ferry, funicular.</p></div><div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-4"><h3 class="font-semibold text-lg">Money</h3><p class="text-sm text-slate-600">Turkish Lira (TRY). Cards widely accepted; carry some cash.</p><h3 class="font-semibold text-lg pt-2">New Year’s Eve</h3><p class="text-sm text-slate-600">Fireworks on the Bosphorus. Book restaurants and cruises weeks ahead.</p></div></div></section>
-<section id="packing"><h2 class="font-display text-3xl font-bold text-istanbul-900 mb-2">Packing Checklist</h2><p class="text-slate-600 text-sm mb-5">Tap to check off.</p><div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100"><div class="grid sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-3" id="packing-list"></div></div></section>
-<footer class="text-center text-sm text-slate-500 pt-8 border-t border-slate-200"><p class="mb-2">Sample itinerary created as a demo interactive web app.</p><p class="mt-4 text-xs">Deployed on Vercel</p></footer>
+<section id="flights"><h2 class="text-3xl font-bold mb-4">Flights</h2>
+<div class="grid md:grid-cols-2 gap-4">
+<div class="bg-white p-5 rounded-xl border"><h3 class="font-bold">Outbound EWR → IST</h3><p class="text-sm text-slate-600">Dec 24 evening → Dec 25 arrival. Airline TBD.</p></div>
+<div class="bg-white p-5 rounded-xl border"><h3 class="font-bold">Return IST → EWR</h3><p class="text-sm text-slate-600">Jan 3 daytime. Leave hotel 4+ hours early. Airline TBD.</p></div>
+</div></section>
+<section id="hotels"><h2 class="text-3xl font-bold mb-4">Hotels</h2>
+<p class="text-sm text-slate-600 mb-4">One Karakoy base for nine nights. Book the room before NYE dinner.</p>
+<div class="grid md:grid-cols-3 gap-4">
+<div class="bg-white p-5 rounded-xl border-2 border-istanbul-500"><p class="text-xs uppercase text-istanbul-500 font-bold">Lead pick</p><h3 class="font-bold mt-1">The Bank Hotel, Karakoy</h3><p class="text-sm text-slate-600 mt-2">Restored bank, roof toward Galata Tower, tram and ferry close. Often €250+ in peak weeks.</p></div>
+<div class="bg-white p-5 rounded-xl border"><p class="text-xs uppercase text-slate-400 font-bold">Alt</p><h3 class="font-bold mt-1">Vault Karakoy</h3><p class="text-sm text-slate-600 mt-2">Bankalar Caddesi. Quieter street, rooftop tower views. Use if The Bank is sold out.</p></div>
+<div class="bg-white p-5 rounded-xl border"><p class="text-xs uppercase text-slate-400 font-bold">Old city</p><h3 class="font-bold mt-1">Hotel Amira / Romance Istanbul</h3><p class="text-sm text-slate-600 mt-2">Sultanahmet side streets. Choose if you want Hagia Sophia outside the door.</p></div>
+</div></section>
+<section id="itinerary"><h2 class="text-3xl font-bold mb-4">Day-by-Day</h2><div id="days-container" class="space-y-3"></div></section>
+<section id="eat"><h2 class="text-3xl font-bold mb-4">Restaurants</h2>
+<div class="grid md:grid-cols-2 gap-4">
+<div class="bg-white p-5 rounded-xl border"><h3 class="font-bold">NYE — book first</h3><p class="text-sm text-slate-600 mt-2">Mikla (Pera rooftop). 360 Istanbul (Istiklal). Meyhane fallback: Asmali Cavit.</p></div>
+<div class="bg-white p-5 rounded-xl border"><h3 class="font-bold">Karakoy dinners</h3><p class="text-sm text-slate-600 mt-2">Karakoy Lokantasi (first night). Neolokal. Ali Ocakbasi. Yeni Lokanta.</p></div>
+<div class="bg-white p-5 rounded-xl border"><h3 class="font-bold">Old city</h3><p class="text-sm text-slate-600 mt-2">Deraliye. Grace Rooftop. Side-street kofte off Divanyolu.</p></div>
+<div class="bg-white p-5 rounded-xl border"><h3 class="font-bold">Casual</h3><p class="text-sm text-slate-600 mt-2">Balik ekmek at Eminonu. Gulluoglu baklava. Cesme Bazlama breakfast. Kadikoy if you ferry to Asia.</p></div>
+</div></section>
+<section id="map"><h2 class="text-3xl font-bold mb-4">Map</h2><div id="map" class="border"></div></section>
 </main>
 <script>
-const days=[{date:"Dec 25",day:"Thursday",title:"Arrival & Settle In",emoji:"✈️",summary:"Land in Istanbul, transfer to hotel, gentle first evening.",details:["Arrive at IST or SAW. Allow 1–1.5 h for transfer + traffic.","Recommended base: Sultanahmet or Galata/Karaköy/Beyoğlu.","Light neighborhood walk if energy allows.","Dinner nearby. Early night for jet lag."],tip:"Have your hotel address written in Turkish for the driver."},{date:"Dec 26",day:"Friday",title:"Sultanahmet Classics",emoji:"🕌",summary:"Hagia Sophia, Blue Mosque, Hippodrome & Basilica Cistern.",details:["Start early at Hagia Sophia.","Cross to the Blue Mosque.","Walk the Hippodrome.","Descend into the Basilica Cistern.","Lunch nearby, then free time."],tip:"These sites are close together — good for a rainy day."},{date:"Dec 27",day:"Saturday",title:"Palaces & Bazaars",emoji:"🏰",summary:"Topkapı Palace, Grand Bazaar and Spice Bazaar.",details:["Morning at Topkapı Palace.","Walk or tram to the Grand Bazaar.","Continue to the Spice Bazaar.","Evening in Eminönü or Karaköy."],tip:"Bargaining is expected in the bazaars."},{date:"Dec 28",day:"Sunday",title:"Bosphorus & Beyoğlu",emoji:"🚢",summary:"Cruise the strait, climb Galata Tower, wander Istiklal.",details:["Public Bosphorus cruise.","Galata Tower or surrounding streets.","Explore Karaköy and Galata.","Stroll Istiklal toward Taksim."],tip:"Ferries are part of the experience."},{date:"Dec 29",day:"Monday",title:"Neighborhoods & Hammam",emoji:"🪥",summary:"Balat & Fener, or Asian side + Turkish bath.",details:["Option A: Balat and Fener.","Option B: Ferry to Üsküdar or Kadıköy.","Afternoon or evening hammam.","Relaxed dinner afterward."],tip:"Book popular hammams in advance."},{date:"Dec 30",day:"Tuesday",title:"Flexible / Museums / Islands",emoji:"🎨",summary:"Museums, shopping, or Princes’ Islands.",details:["Archaeology Museums or Istanbul Modern.","Or ferry to Büyükada — check winter times.","Shopping if desired.","Keep the day flexible for weather."],tip:"Good buffer day before NYE."},{date:"Dec 31",day:"Wednesday",title:"New Year’s Eve",emoji:"🎆",summary:"Bosphorus fireworks — the highlight.",details:["Keep daytime light.","Evening: cruise, rooftop, or Ortaköy / Beşiktaş.","Fireworks at midnight from multiple points.","Taksim will be very crowded."],tip:"Reserve NYE 3+ weeks ahead."},{date:"Jan 1",day:"Thursday",title:"Recovery & Slow Day",emoji:"☕",summary:"Tea, parks, easy wandering.",details:["Sleep in and brunch.","Gülhane Park or another green space.","Optional whirling dervish ceremony.","Café hopping."],tip:"Hours may change on Jan 1."},{date:"Jan 2",day:"Friday",title:"Last Full Day",emoji:"🛒",summary:"Revisit favorites or shop.",details:["Return to missed sights.","Souvenir shopping.","Enjoy the city without a checklist.","Pack for departure."],tip:"Leave buffer for winter weather."},{date:"Jan 3",day:"Saturday",title:"Departure",emoji:"🛫",summary:"Transfer to the airport and fly home.",details:["Allow plenty of time for IST traffic.","SAW is on the Asian side — extra transfer time.","Safe travels!"],tip:"Check airline seasonal notes."}];
-const container=document.getElementById('days-container');const calContainer=document.getElementById('calendar-days');let focusedIndex=null;
-days.forEach((d,i)=>{const el=document.createElement('div');el.id=`day-${i}`;el.className='day-card bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden';el.dataset.index=i;el.innerHTML=`<button class="w-full text-left px-5 py-4 flex items-center gap-4 hover:bg-slate-50 transition" onclick="toggleDay(${i})"><div class="text-2xl w-10 text-center">${d.emoji}</div><div class="flex-1 min-w-0"><div class="flex flex-wrap items-baseline gap-x-3"><span class="font-semibold text-istanbul-900">${d.date}</span><span class="text-sm text-slate-500">${d.day}</span></div><div class="font-medium text-slate-800 truncate">${d.title}</div><div class="text-sm text-slate-500 truncate">${d.summary}</div></div></button><div class="day-content px-5" id="content-${i}"><div class="pb-5 pt-1 border-t border-slate-100"><ul class="space-y-2 text-sm text-slate-700 mb-4">${d.details.map(item=>`<li class="flex gap-2"><span class="text-istanbul-500">•</span><span>${item}</span></li>`).join('')}</ul><div class="bg-istanbul-50 text-istanbul-900 text-sm rounded-xl px-4 py-3"><span class="font-medium">Tip:</span> ${d.tip}</div></div></div>`;container.appendChild(el);const btn=document.createElement('button');btn.className='cal-day px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-istanbul-100';btn.dataset.index=i;btn.innerHTML=`<div class="leading-tight">${d.date.replace(' ','<br>')}</div>`;btn.onclick=()=>focusDay(i);calContainer.appendChild(btn);});
-function setActiveCalendar(i){document.querySelectorAll('.cal-day').forEach(b=>b.classList.remove('active'));const btn=document.querySelector(`.cal-day[data-index="${i}"]`);if(btn)btn.classList.add('active');}
-function setFocused(i){document.querySelectorAll('.day-card').forEach(c=>c.classList.remove('focused'));document.querySelectorAll('.cal-day').forEach(b=>b.classList.remove('focused'));if(i===null||i===focusedIndex){focusedIndex=null;return;}focusedIndex=i;const card=document.getElementById(`day-${i}`);const btn=document.querySelector(`.cal-day[data-index="${i}"]`);if(card)card.classList.add('focused');if(btn)btn.classList.add('focused');}
-function toggleDay(i){const content=document.getElementById(`content-${i}`);content.classList.toggle('open');}
-function focusDay(i){const content=document.getElementById(`content-${i}`);if(!content.classList.contains('open'))content.classList.add('open');setFocused(i===focusedIndex?null:i);setActiveCalendar(i);const card=document.getElementById(`day-${i}`);if(card){const y=card.getBoundingClientRect().top+window.scrollY-130;window.scrollTo({top:y,behavior:'smooth'});}}
-document.querySelectorAll('.day-card').forEach(card=>{const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting)setActiveCalendar(parseInt(entry.target.dataset.index,10));});},{rootMargin:'-20% 0px -55% 0px',threshold:0});observer.observe(card);});
-setTimeout(()=>{toggleDay(0);setActiveCalendar(0);},100);
-const map=L.map('map').setView([41.0082,28.9784],12);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);
-[{name:"Hagia Sophia",coords:[41.0086,28.9802],desc:"Byzantine masterpiece"},{name:"Blue Mosque",coords:[41.0054,28.9768],desc:"Sultan Ahmed Mosque"},{name:"Topkapı Palace",coords:[41.0115,28.9833],desc:"Ottoman residence"},{name:"Basilica Cistern",coords:[41.0084,28.9779],desc:"Underground marvel"},{name:"Grand Bazaar",coords:[41.0106,28.9681],desc:"Covered market"},{name:"Galata Tower",coords:[41.0256,28.9742],desc:"Panoramic views"},{name:"Spice Bazaar",coords:[41.0166,28.9706],desc:"Egyptian Bazaar"},{name:"Ortaköy",coords:[41.0554,29.0270],desc:"NYE waterfront"}].forEach(s=>L.marker(s.coords).addTo(map).bindPopup(`<strong>${s.name}</strong><br>${s.desc}`));
-const packingEl=document.getElementById('packing-list');["Waterproof winter coat","Warm layers / sweaters","Thermal base layers","Waterproof walking shoes","Scarf, gloves, warm hat","Compact umbrella","Comfortable socks","Modest clothing for mosques","Power adapter (Type C/F)","Portable charger","Reusable water bottle","Small day backpack","Medications","Passport copies"].forEach((item,idx)=>{const label=document.createElement('label');label.className='checklist-item flex items-center gap-3 cursor-pointer select-none py-1';label.innerHTML=`<input type="checkbox" class="w-4 h-4 rounded border-slate-300" id="pack-${idx}"><span class="text-sm">${item}</span>`;packingEl.appendChild(label);});
+const days=[
+{date:'Dec 25',title:'Arrival',morning:'Overnight flight. Keep the morning empty if you land before noon.',afternoon:'Transfer to the hotel. Short walk, no museum.',evening:'Karakoy Lokantasi or hotel restaurant.',tip:'Hotel address in Turkish.'},
+{date:'Dec 26',title:'Sultanahmet',morning:'Hagia Sophia at opening, then Blue Mosque.',afternoon:'Basilica Cistern and Hippodrome. Lunch off the square.',evening:'Tram to Karakoy or Grace Rooftop.',tip:'All walking distance. Good rain day.'},
+{date:'Dec 27',title:'Palace and bazaars',morning:'Topkapi plus Harem. Winter close is early.',afternoon:'Grand Bazaar (closed Sunday) then Spice Bazaar.',evening:'Eminonu dusk, then dinner across Galata Bridge.',tip:'First bazaar price is not the price.'},
+{date:'Dec 28',title:'Water and Beyoglu',morning:'Public Bosphorus cruise.',afternoon:'Galata Tower square, wander uphill.',evening:'Istiklal lights. Yeni Lokanta or Asmali Cavit.',tip:'Sunday is the water day; bazaars closed.'},
+{date:'Dec 29',title:'Neighborhoods and hammam',morning:'Balat/Fener or ferry to Uskudar/Kadikoy.',afternoon:'Stay on one side of the water.',evening:'Cagaloglu hammam, quiet dinner.',tip:'Book the hammam.'},
+{date:'Dec 30',title:'Buffer',morning:'Istanbul Modern or Archaeology Museums.',afternoon:'Optional Buyukada ferry or shopping.',evening:'Confirm NYE table. Neolokal or hotel.',tip:'So the 31st is not a scramble.'},
+{date:'Dec 31',title:'New Year Eve',morning:'Sleep in. Long breakfast.',afternoon:'One short walk. Layers for midnight wind.',evening:'Mikla, 360, meyhane, or cruise. Fireworks at midnight.',tip:'Do not cross the city at 23:00.'},
+{date:'Jan 1',title:'Slow new year',morning:'Brunch. Kitchens open late.',afternoon:'Gulhane Park or a ferry with no agenda.',evening:'Optional dervishes or Galata cafes.',tip:'Hours are uneven on Jan 1.'},
+{date:'Jan 2',title:'Last full day',morning:'Return to one favorite place.',afternoon:'Gifts: spices, ceramics, lokum.',evening:'Repeat the best meal of the week.',tip:'Pack tonight.'},
+{date:'Jan 3',title:'Departure',morning:'Checkout. Leave 4+ hours before the flight.',afternoon:'IST.',evening:'Land EWR or JFK.',tip:'IST is not 30 minutes from Sultanahmet.'}
+];
+const box=document.getElementById('days-container');
+days.forEach((d,i)=>{
+const el=document.createElement('div');
+el.className='bg-white rounded-xl border overflow-hidden';
+el.innerHTML='<button class="w-full text-left px-5 py-4 font-semibold" onclick="document.getElementById(\x27c'+i+'\x27).classList.toggle(\x27open\x27)">'+d.date+' — '+d.title+'</button><div id="c'+i+'" class="day-content px-5"><div class="pb-4 text-sm space-y-2"><p><b>Morning.</b> '+d.morning+'</p><p><b>Afternoon.</b> '+d.afternoon+'</p><p><b>Evening.</b> '+d.evening+'</p><p class="text-slate-500">'+d.tip+'</p></div></div>';
+box.appendChild(el);
+});
+document.getElementById('c0').classList.add('open');
+const map=L.map('map').setView([41.02,28.98],13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'OSM'}).addTo(map);
+[[41.0086,28.9802,'Hagia Sophia'],[41.0256,28.9742,'Galata Tower'],[41.0252,28.9748,'Karakoy hotels'],[41.0554,29.0270,'Ortakoy']].forEach(s=>L.marker([s[0],s[1]]).addTo(map).bindPopup(s[2]));
 </script>
-</body>
-</html>
+</body></html>
